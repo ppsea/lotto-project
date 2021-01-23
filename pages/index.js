@@ -1,14 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import Layout from "../components/Layout";
+import Main from "../components/Main";
 const index = () => {
-    return (
-        <Wrapper>
-        hello world      
-        </Wrapper>
-    );
+  return (
+    <Layout>
+      <Main />
+    </Layout>
+    // <Layout>
+    //   <Main />
+    // </Layout>
+  );
 };
 
 export default index;
-const Wrapper = styled.div`
-    color: red;
-`;
