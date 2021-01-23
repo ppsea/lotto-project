@@ -5,7 +5,12 @@ function recommend(type, likeArray) {
   let resultArray = [];
   if (type == "trend") {
     //최근 10개중 가장 많은 3개 숫자들을 배열로 리턴
-    let currentArray = [...data.filter((i) => i.index < 10)];
+    let currentArray = [
+      ...data
+        .sort((a, b) => b.drwNo - a.drwNo)
+        .filter((i, index) => index < 10),
+    ];
+
     currentArray = make3Numbers(currentArray);
     for (let i = 0; i < 5; i++) {
       resultArray = [...resultArray, makeOneArray(currentArray)];

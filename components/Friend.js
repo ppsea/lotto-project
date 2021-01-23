@@ -60,7 +60,7 @@ const index = () => {
             inverted={buttonState == "many"}
             color={"#69c8f2"}
           >
-            Many
+            Best
           </Button>
           <Button
             onClick={() => setButtonState("random")}
