@@ -115,13 +115,13 @@ const Ball = styled.span`
   display: inline-block;
   text-align: center;
   background-color: ${(props) =>
-    props.number < 10
+    props.number <= 10
       ? "#fbc400"
-      : props.number < 20
+      : props.number <= 20
       ? "#69c8f2"
-      : props.number < 30
+      : props.number <= 30
       ? "#ff7272"
-      : props.number < 40
+      : props.number <= 40
       ? "#aaa"
       : "#b0d840"};
   padding: 6px;

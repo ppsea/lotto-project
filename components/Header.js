@@ -8,6 +8,9 @@ const index = () => {
       <Link href="/">
         <MainLogo>Lotto Friends</MainLogo>
       </Link>
+      <Link href="/friends/[name]" as="/friends/친구야">
+        <LastLink>뽑기</LastLink>
+      </Link>
     </Wrapper>
   );
 };
@@ -23,6 +26,9 @@ const Wrapper = styled.div`
   right: 0;
   width: 100%;
   color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   @media (max-width: 1100px) {
     padding: 15px 0;
   }
@@ -35,4 +41,9 @@ const Wrapper = styled.div`
 const MainLogo = styled.a`
   cursor: pointer;
   padding-left: 15px;
+`;
+
+const LastLink = styled.a`
+  margin-right: 15px;
+  cursor: pointer;
 `;

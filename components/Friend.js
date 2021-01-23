@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { useRouter } from "next/router";
+import html2canvas from "html2canvas";
 import recommend from "../util/recommend";
 const index = () => {
   const { name } = useRouter().query;
@@ -40,13 +41,41 @@ const index = () => {
     }
     return <></>;
   }, [buttonState]);
+
+  function downloadResult() {
+    let el = document.getElementById("download");
+    html2canvas(el, {
+      // scale: 2,
+      // scrollY: -50,
+      // width: el.scrollWidth,
+      // height: el.scrollHeight,
+      // backgroundColor: null,
+    }).then((canvas) => {
+      canvas.setAttribute("style", "display: block");
+      var data = canvas.toDataURL("image/png");
+      saveAs(data, "lotto.png");
+    });
+  }
+
+  //FUNCTION 이미지 저장하기.
+  function saveAs(uri, fileName) {
+    var link = document.createElement("a");
+    if (typeof link.download === "string") {
+      link.href = uri;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      window.open(uri);
+    }
+  }
   if (name != undefined) {
     return (
-      <Wrapper>
+      <Wrapper id="download">
         <Name>
           <span>{name}!</span> 로또 1등 가즈아!
         </Name>
-        <Img />
         <ButtonBlock>
           <Button
             onClick={() => setButtonState("trend")}
@@ -79,18 +108,32 @@ const index = () => {
         </ButtonBlock>
         <RecommendBlock>
           <h3>
+            {buttonState == "trend" ? (
+              <Accent buttonState={buttonState}>최근 잘 나오는</Accent>
+            ) : buttonState == "many" ? (
+              <Accent buttonState={buttonState}>가장 잘 나오는</Accent>
+            ) : buttonState == "random" ? (
+              <Accent buttonState={buttonState}>랜덤한</Accent>
+            ) : buttonState == "like" ? (
+              <Accent buttonState={buttonState}>좋아하는</Accent>
+            ) : (
+              <></>
+            )}
             {buttonState == "trend"
-              ? `최근 잘나오는 숫자들로 번호를 추천합니다`
+              ? ` 숫자들로 번호를 추천합니다`
               : buttonState == "many"
-              ? `가장 잘나오는 숫자들로 번호를 추천합니다`
+              ? ` 숫자들로 번호를 추천합니다`
               : buttonState == "random"
-              ? `무작위 숫자들로 번호를 추천합니다`
+              ? ` 숫자들로 번호를 추천합니다`
               : buttonState == "like"
-              ? `좋아하는 숫자들로 번호를 추천합니다`
+              ? ` 숫자들로 번호를 추천합니다`
               : ""}
           </h3>
           {renderRecommendList()}
         </RecommendBlock>
+        <DownloadBlock>
+          <DownloadIcon onClick={downloadResult} />
+        </DownloadBlock>
       </Wrapper>
     );
   }
@@ -100,6 +143,10 @@ const index = () => {
 export default index;
 
 const Wrapper = styled.div`
+  background-image: url("/static/friend.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   @media (max-width: 1100px) {
     font-size: 18px;
     padding-top: 48px;
@@ -121,20 +168,6 @@ const Name = styled.h2`
   }
 `;
 
-const Img = styled.div`
-  background-image: url("/static/gazua.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin: 0 auto;
-  @media (max-width: 1100px) {
-    width: 100vw;
-    height: 100vw;
-  }
-  @media (min-width: 1100px) {
-    width: 400px;
-    height: 400px;
-  }
-`;
 const ButtonBlock = styled.div`
   margin-top: 30px;
   display: flex;
@@ -142,7 +175,7 @@ const ButtonBlock = styled.div`
   align-items: center;
   flex-wrap: row wrap;
   & > div {
-    margin-right: 10px;
+    margin-right: 15px;
   }
   & > div:last-child {
     margin: 0;
@@ -164,10 +197,28 @@ const RecommendBlock = styled.div`
     font-size: 14px;
     color: #aaa;
   }
+  @media (max-width: 1100px) {
+    padding-bottom: 50px;
+  }
+  @media (min-width: 1100px) {
+    padding-bottom: 30px;
+  }
+`;
+const Accent = styled.span`
+  color: ${(props) =>
+    props.buttonState == "trend"
+      ? "#fbc400"
+      : (props) =>
+          props.buttonState == "many"
+            ? "#69c8f2"
+            : (props) =>
+                props.buttonState == "random"
+                  ? "#ff7272"
+                  : (props) => (props.buttonState == "like" ? "#b0d840" : "")};
 `;
 
 const RecommendTable = styled.table`
-  margin: 30px auto;
+  margin: 50px auto 0 auto;
   border-collapse: collapse;
   @media (max-width: 1100px) {
     width: 100vw;
@@ -194,13 +245,13 @@ const Ball = styled.span`
   display: inline-block;
   text-align: center;
   background-color: ${(props) =>
-    props.number < 10
+    props.number <= 10
       ? "#fbc400"
-      : props.number < 20
+      : props.number <= 20
       ? "#69c8f2"
-      : props.number < 30
+      : props.number <= 30
       ? "#ff7272"
-      : props.number < 40
+      : props.number <= 40
       ? "#aaa"
       : "#b0d840"};
   padding: 6px;
@@ -214,4 +265,18 @@ const Ball = styled.span`
     margin: 0 3px 0 0;
     min-width: 25px;
   }
+`;
+const DownloadBlock = styled.div`
+  width: 100%;
+  @media (min-width: 1100px) {
+    padding-bottom: 20px;
+  }
+`;
+const DownloadIcon = styled.div`
+  background-image: url("/static/download.svg");
+  background-size: 100% 100%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  margin: 0 auto;
 `;

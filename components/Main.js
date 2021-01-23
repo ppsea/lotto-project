@@ -21,6 +21,8 @@ const index = () => {
   const onClickFriend = useCallback(() => {
     if (friendName.length > 0) {
       router.push("/friends/[name]", `/friends/${friendName}`);
+    } else {
+      router.push("/friends/[name]", `/friends/친구야`);
     }
   }, [friendName]);
 
@@ -54,38 +56,53 @@ const Img = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   width: 100vw;
-  height: 100vw;
   opacity: 0.9;
+  @media (max-width: 1100px) {
+    height: 100vw;
+  }
+  @media (min-width: 1100px) {
+    height: 100vh;
+  }
 `;
 const InnerBlock = styled.div`
   position: absolute;
   color: #fff;
   left: 0;
   right: 0;
-  top: 30vw;
   width: 80vw;
   margin: 0 auto;
+  @media (max-width: 1100px) {
+    top: 45vw;
+  }
+  @media (min-width: 1100px) {
+    top: 44vh;
+  }
 `;
 
-const Greeting = styled.div``;
+const Greeting = styled.div`
+  display: flex;
+  align-items: center;
+`;
 const GreetingButton = styled.div`
-  background-image: url("/static/go.svg");
+  background-image: url("/static/right.svg");
   background-size: 100% 100%;
   width: 30px;
   height: 30px;
-  margin: 50px auto 0 auto;
   cursor: pointer;
 `;
 const Input = styled.input`
-  width: 100%;
   color: #fff;
   ::placeholder {
     color: #fff;
   }
   @media (max-width: 1100px) {
-    font-size: 18px;
+    font-size: 20px;
+    width: 80vw;
   }
   @media (min-width: 1100px) {
-    font-size: 32px;
+    font-size: 42px;
+    height: 56px;
+    line-height: 55px;
+    width: 500px;
   }
 `;
