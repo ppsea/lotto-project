@@ -10,17 +10,14 @@ function recommend(type, likeArray) {
         .sort((a, b) => b.drwNo - a.drwNo)
         .filter((i, index) => index < 10),
     ];
-
-    currentArray = make3Numbers(currentArray);
     for (let i = 0; i < 5; i++) {
-      resultArray = [...resultArray, makeOneArray(currentArray)];
+      resultArray = [...resultArray, makeOneArray(make3Numbers(currentArray))];
     }
   } else if (type == "many") {
     //모든 데이터 중 가장 많은 3개 숫자들을 배열로 리턴
     let currentArray = [...data];
-    currentArray = make3Numbers(currentArray);
     for (let i = 0; i < 5; i++) {
-      resultArray = [...resultArray, makeOneArray(currentArray)];
+      resultArray = [...resultArray, makeOneArray(make3Numbers(currentArray))];
     }
   } else if (type == "random") {
     //랜덤한 6개 숫자들의 배열
@@ -39,13 +36,13 @@ function recommend(type, likeArray) {
 //로또 데이터를 활용해서 가장 많은 3개를 픽하자.
 function make3Numbers(array) {
   let thisArray = [...array];
-  let firstCountArray = array.map((i) => i.drwtNo1);
-  let secondCountArray = array.map((i) => i.drwtNo2);
-  let thirdCountArray = array.map((i) => i.drwtNo3);
-  let fourthCountArray = array.map((i) => i.drwtNo4);
-  let fifthCountArray = array.map((i) => i.drwtNo5);
-  let sixthCountArray = array.map((i) => i.drwtNo6);
-  let bonusCountArray = array.map((i) => i.bnusNo);
+  let firstCountArray = thisArray.map((i) => i.drwtNo1);
+  let secondCountArray = thisArray.map((i) => i.drwtNo2);
+  let thirdCountArray = thisArray.map((i) => i.drwtNo3);
+  let fourthCountArray = thisArray.map((i) => i.drwtNo4);
+  let fifthCountArray = thisArray.map((i) => i.drwtNo5);
+  let sixthCountArray = thisArray.map((i) => i.drwtNo6);
+  let bonusCountArray = thisArray.map((i) => i.bnusNo);
 
   //전체배열
   let sumOfAllArray = [
@@ -62,26 +59,27 @@ function make3Numbers(array) {
   let counts = {};
 
   //object에 데이터 넣어주기
-  sumOfAllArray.forEach((x) => (counts[x] = (counts[x] || 0) + 1));
-
+  // sumOfAllArray.forEach((x) => (counts[x] = (counts[x] || 0) + 1));
+  for (let i = 0; i < sumOfAllArray.length; i++) {
+    if (counts[sumOfAllArray[i]] == undefined) {
+      counts[sumOfAllArray[i]] = 1;
+    } else {
+      counts[sumOfAllArray[i]] = counts[sumOfAllArray[i]] + 1;
+    }
+  }
   let resultArray = [];
   //object에서 배열로 넣어주고
   //카운트가 높은 순서로 정렬
-  //3개추리기
-  if (counts.keys != undefined) {
-    resultArray = [
-      ...Object.keys[counts].map((key) => ({
-        number: key,
-        count: counts[key],
-      })),
-    ]
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 3);
-  }
-
+  resultArray = [
+    ...Object.keys(counts).map((key) => ({
+      number: Number.parseInt(key),
+      count: counts[key],
+    })),
+  ].sort((a, b) => b.count - a.count);
+  //높은 순위 20개 뽑아서 랜덤 3개 추리기
+  resultArray = shuffleArray(resultArray.slice(0, 20));
   //결과값은 숫자만
-  resultArray = [...resultArray].map((i) => i.number);
-  return resultArray;
+  return [...resultArray].slice(0, 2).map((i) => i.number);
 }
 
 //주어진 배열값은 제외하고 6개의 숫자배열 리턴
