@@ -19,6 +19,7 @@ export default class MyDocument extends Document {
             content="Share predicted lottery numbers with your friends | Lotto Friends | Lotto Friends"
           />
           <meta property="og:image" content="/static/logo.png" />
+          <link rel="icon" type="image/x-icon" href="/static/logo.png" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"

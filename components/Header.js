@@ -6,7 +6,9 @@ const index = () => {
   return (
     <Wrapper>
       <Link href="/">
-        <MainLogo>Lotto Friends</MainLogo>
+        <MainLogo>
+          Lotto Friends <LogoIcon />
+        </MainLogo>
       </Link>
       <Link href="/friends/[name]" as="/friends/친구야">
         <LastLink>뽑기</LastLink>
@@ -40,7 +42,14 @@ const Wrapper = styled.div`
 
 const MainLogo = styled.a`
   cursor: pointer;
-  padding-left: 15px;
+  margin-left: 15px;
+`;
+const LogoIcon = styled.span`
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-image: url("/static/logo.png");
+  background-size: 100% 100%;
 `;
 
 const LastLink = styled.a`

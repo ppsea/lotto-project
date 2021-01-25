@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import CountUp from "react-countup";
 import html2canvas from "html2canvas";
 import recommend from "../util/recommend";
 const index = () => {
@@ -29,7 +31,12 @@ const index = () => {
                 <Td>
                   {array.map((ball, bIndex) => (
                     <Ball key={bIndex} number={ball}>
-                      {ball}
+                      <CountUp
+                        start={ball - 10 > 0 ? ball - 10 : 0}
+                        end={ball}
+                        duration={2}
+                        decimals={0}
+                      ></CountUp>
                     </Ball>
                   ))}
                 </Td>
@@ -129,6 +136,9 @@ const index = () => {
               ? ` 숫자들로 번호를 추천합니다`
               : ""}
           </h3>
+          <Link href="/friends/[name]" as={`/friends/${name}`}>
+            <PickIcon></PickIcon>
+          </Link>
           {renderRecommendList()}
         </RecommendBlock>
         <DownloadBlock>
@@ -160,7 +170,7 @@ const Wrapper = styled.div`
 `;
 
 const Name = styled.h2`
-  margin: 20px 0;
+  margin: 40px 0 20px 0;
   font-size: 22px;
   text-align: center;
   & > span {
@@ -183,10 +193,15 @@ const ButtonBlock = styled.div`
 `;
 const Button = styled.div`
   cursor: pointer;
+  padding: 5px 15px;
+  border: 1px solid #000;
+  border-radius: 14px;
   ${(props) =>
     props.inverted &&
     css`
-      color: ${(props) => props.color};
+      color: #000;
+      background-color: ${(props) => props.color};
+      border: 1px solid ${(props) => props.color};
     `}
 `;
 
@@ -198,10 +213,10 @@ const RecommendBlock = styled.div`
     color: #aaa;
   }
   @media (max-width: 1100px) {
-    padding-bottom: 50px;
+    padding-bottom: 30px;
   }
   @media (min-width: 1100px) {
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
 `;
 const Accent = styled.span`
@@ -218,7 +233,7 @@ const Accent = styled.span`
 `;
 
 const RecommendTable = styled.table`
-  margin: 50px auto 0 auto;
+  margin: 0 auto;
   border-collapse: collapse;
   @media (max-width: 1100px) {
     width: 100vw;
@@ -266,6 +281,26 @@ const Ball = styled.span`
     min-width: 25px;
   }
 `;
+const PickIcon = styled.div`
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 5px auto;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  background-image: url("/static/pie.svg");
+  background-size: 100% 100%;
+
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const DownloadBlock = styled.div`
   width: 100%;
   @media (min-width: 1100px) {
