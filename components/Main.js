@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import About from "./About";
 import LottoList from "./LottoList";
 const index = () => {
   const router = useRouter();
@@ -41,6 +42,7 @@ const index = () => {
           </Greeting>
         </InnerBlock>
       </Img>
+      <About />
       <LottoList />
     </Wrapper>
   );
@@ -49,19 +51,21 @@ const index = () => {
 export default index;
 const Wrapper = styled.div`
   width: 100vw;
+  padding-bottom: 50px;
 `;
 const Img = styled.div`
   position: relative;
   background-image: url("/static/main.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  width: 100vw;
   opacity: 0.9;
   @media (max-width: 1100px) {
+    width: 100vw;
     height: 100vw;
   }
   @media (min-width: 1100px) {
-    height: 100vh;
+    width: 100vw;
+    height: 60vh;
   }
 `;
 const InnerBlock = styled.div`
@@ -75,7 +79,7 @@ const InnerBlock = styled.div`
     top: 45vw;
   }
   @media (min-width: 1100px) {
-    top: 44vh;
+    top: 25vh;
   }
 `;
 

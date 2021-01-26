@@ -4,9 +4,17 @@ const index = () => {
   const clickHenry = useCallback(() => {
     var win = window.open("https://github.com/HenrySungnamKim", "_blank");
   }, []);
+
+  const clickDonation = useCallback(() => {
+    var win = window.open(
+      "https://donaricano.com/mypage/1407538213_sx6MXH",
+      "_blank"
+    );
+  }, []);
   return (
     <Wrapper>
-      © <Span onClick={clickHenry}>henry_kkk</Span>
+      © <Span onClick={clickHenry}>개발자 애용</Span>
+      <Donation onClick={clickDonation}>Support</Donation>
     </Wrapper>
   );
 };
@@ -28,4 +36,8 @@ const Wrapper = styled.div`
 `;
 const Span = styled.span`
   cursor: pointer;
+`;
+const Donation = styled.span`
+  cursor: pointer;
+  margin-left: 50px;
 `;

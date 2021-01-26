@@ -105,6 +105,7 @@ const Th = styled.th`
 const Tr = styled.tr`
   border-bottom: 1px solid #d8dce3;
   padding: 5px 0;
+  background-color: #fdfdfd;
 `;
 const Td = styled.td`
   text-align: center;

@@ -32,9 +32,9 @@ const index = () => {
                   {array.map((ball, bIndex) => (
                     <Ball key={bIndex} number={ball}>
                       <CountUp
-                        start={ball - 10 > 0 ? ball - 10 : 0}
+                        start={ball - 10 > 0 ? ball - 10 : 1}
                         end={ball}
-                        duration={2}
+                        duration={1.7}
                         decimals={0}
                       ></CountUp>
                     </Ball>
@@ -216,7 +216,7 @@ const RecommendBlock = styled.div`
     padding-bottom: 30px;
   }
   @media (min-width: 1100px) {
-    padding-bottom: 10px;
+    padding-bottom: 30px;
   }
 `;
 const Accent = styled.span`
