@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 const index = () => {
   const clickHenry = useCallback(() => {
-    var win = window.open("https://github.com/HenrySungnamKim", "_blank");
+    var win = window.open("https://github.com/ppsea", "_blank");
   }, []);
 
   const clickDonation = useCallback(() => {
