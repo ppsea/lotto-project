@@ -64,7 +64,7 @@ const index = () => {
               .sort((a, b) => b.drwNo - a.drwNo)
               .map(
                 (item, index) =>
-                  index < 5 && (
+                  index < 9 && (
                     <Tr key={index}>
                       <Td>{item.drwNo}</Td>
                       <Td>{measureUp(item.firstWinamnt)}원</Td>
