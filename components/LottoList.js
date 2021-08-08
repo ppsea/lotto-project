@@ -1,8 +1,20 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import data from "../data.json";
+import useSWR from "swr";
+import fetch from "unfetch";
+import * as dateFns from "date-fns";
 import { measureUp } from "../util/money";
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
+
 const index = () => {
+  const { data, error } = useSWR(
+    `${process.env.API_URL}?offset=0&limit=8`,
+    fetcher
+  );
+  if (!data) {
+    return <Loading>데이터를 불러오는 중입니다...</Loading>;
+  }
   return (
     <Wrapper>
       {/* 모바일용 */}
@@ -14,7 +26,7 @@ const index = () => {
               <Th>1등당첨금</Th>
               <Th>당첨번호</Th>
             </Tr>
-            {data
+            {data.data
               .sort((a, b) => b.drwNo - a.drwNo)
               .map(
                 (item, index) =>
@@ -48,7 +60,7 @@ const index = () => {
               <Th>보너스</Th>
               <Th>개표일</Th>
             </Tr>
-            {data
+            {data.data
               .sort((a, b) => b.drwNo - a.drwNo)
               .map(
                 (item, index) =>
@@ -67,7 +79,9 @@ const index = () => {
                       <Td>
                         <Ball number={item.bnusNo}>{item.bnusNo}</Ball>
                       </Td>
-                      <Td>{item.drwNoDate}</Td>
+                      <Td>
+                        {dateFns.format(new Date(item.drwNoDate), "yyyy-MM-dd")}
+                      </Td>
                     </Tr>
                   )
               )}
@@ -79,6 +93,7 @@ const index = () => {
 };
 
 export default index;
+
 const Wrapper = styled.div`
   & table {
     border-collapse: collapse;
@@ -87,6 +102,15 @@ const Wrapper = styled.div`
   & tbody {
   }
 `;
+
+const Loading = styled.p`
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const MobileView = styled.div`
   font-size: 14px;
   @media (min-width: 1100px) {
