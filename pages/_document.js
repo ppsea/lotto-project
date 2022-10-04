@@ -49,6 +49,11 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
             rel="stylesheet"
           />
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8483661130481553"
+            crossOrigin="anonymous"
+          ></script>
         </Head>
         <body>
           <Main />
